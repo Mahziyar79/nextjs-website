@@ -19,7 +19,7 @@ export default function Home({ postCategories, posts }) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps() {  
   const { data: postCategories } = await axios.get(
     "http://localhost:5000/api/post-category"
   );

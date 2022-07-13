@@ -1,12 +1,12 @@
-import {
-  AnnotationIcon,
-  BookmarkIcon,
-  ClockIcon,
-  HeartIcon,
-} from "@heroicons/react/outline";
+import { ClockIcon } from "@heroicons/react/outline";
 import Link from "next/link";
+import ToPersianDigits from "../components/ToPersinaDigits";
+import PostInteraction from "./PostInteraction";
 
 const PostList = ({ posts }) => {
+  if (!posts.length) {
+    return <h2 className="mr-4 md:w-[400px]">مقاله ای در این دسته بندی وجود ندارد</h2>;
+  }
   return (
     <div className="md:col-span-9 grid grid-cols-6 gap-8">
       {posts.map((blog, index) => {
@@ -56,27 +56,11 @@ const PostList = ({ posts }) => {
                 </div>
                 {/* blog interaction */}
                 <div className="flex items-center justify-between mt-4">
-                  <div className="flex items-center gap-x-1">
-                    <button className="bg-gray-200 p-0.5 rounded flex items-center gap-x-1">
-                      <AnnotationIcon className="w-4 h-4 stroke-gray-500" />
-                      <span className="text-xs text-gray-500 font-bold">
-                        10
-                      </span>
-                    </button>
-                    <button className="bg-red-100 p-0.5 rounded flex items-center gap-x-1">
-                      <HeartIcon className="w-4 h-4 stroke-red-500" />
-                      <span className="text-xs text-red-500 font-bold">
-                        {blog.likesCount}
-                      </span>
-                    </button>
-                    <button className="bg-blue-100 p-0.5 rounded flex items-center gap-x-1">
-                      <BookmarkIcon className="w-4 h-4 stroke-blue-500" />
-                    </button>
-                  </div>
+                  <PostInteraction blog={blog} isSmall />
                   <div className="flex items-center text-[11px] text-gray-400">
                     <ClockIcon className="ml-1 w-4 h-4 stroke-gray-400" />
                     <span>زمان مطالعه :</span>
-                    <span>{blog.readingTime}</span>
+                    <span>{ToPersianDigits(blog.readingTime)}</span>
                     <span>دقیقه</span>
                   </div>
                 </div>
