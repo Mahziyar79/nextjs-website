@@ -1,6 +1,6 @@
 import { ClockIcon } from "@heroicons/react/outline";
 import Link from "next/link";
-import ToPersianDigits from "../components/ToPersinaDigits";
+import ToPersianDigits from "../utils/ToPersinaDigits";
 import PostInteraction from "./PostInteraction";
 
 const PostList = ({ posts }) => {

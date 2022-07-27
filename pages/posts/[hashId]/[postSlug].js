@@ -1,13 +1,15 @@
 import axios from "axios";
 import Link from "next/link";
 import PostInteraction from "../../../components/PostInteraction";
-import ToPersianDigits from "../../../components/ToPersinaDigits";
+import ToPersianDigits from "../../../utils/ToPersinaDigits";
 import { FaTelegram } from "react-icons/fa";
 import { IoLogoTwitter, IoLogoInstagram } from "react-icons/io";
 import { MdContentCopy, MdCheckCircleOutline } from "react-icons/md";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useState } from "react";
 import PostList from "../../../components/PostList";
+import PostCommnet from "../../../components/postComments/PostComment";
+import { ToLocalDate } from "../../../utils/ToLocalDate";
 
 const PostPage = ({ post }) => {
   const [copied, setCopied] = useState(false);
@@ -23,9 +25,9 @@ const PostPage = ({ post }) => {
   return (
     <div>
       <div className="bg-gray-50 min-h-screen">
-        <div className="container mx-auto lg:max-w-screen-lg px-4 md:px-0 pt-6">
+        <div className="container mx-auto lg:max-w-screen-lg xl:max-w-screen-xl px-4 md:px-0 pt-6">
           {/* blog header */}
-          <div className="md:flex-row items-start flex mx-auto lg:max-w-screen-md md:items-center justify-between flex-col gap-y-6">
+          <div className="md:flex-row items-start flex mx-auto lg:max-w-screen-md xl:max-w-screen-lg md:items-center justify-between flex-col gap-y-6">
             <div className="flex items-center">
               <div>
                 <img
@@ -51,7 +53,7 @@ const PostPage = ({ post }) => {
                 </span>
                 <div className="mr-3 items-center text-xs flex gap-x-2">
                   <span>
-                    {new Date(postInfo.createdAt).toLocaleDateString("fa-IR")}
+                    {ToLocalDate(postInfo.createdAt)}
                   </span>
                   <span className="text-2xl mt-[-12px]">.</span>
                   <div>
@@ -67,7 +69,7 @@ const PostPage = ({ post }) => {
             </div>
           </div>
           {/* blog content */}
-          <main className="mt-8 prose mx-auto max-w-screen-md prose-slate md:prose-h1:text-3xl prose-h1:text-2xl md:prose-h2:text-2xl prose-h2:text-xl prose-h1:font-bold prose-img:rounded-xl">
+          <main className="mt-8 prose mx-auto max-w-screen-md xl:max-w-screen-lg prose-slate md:prose-h1:text-3xl prose-h1:text-2xl md:prose-h2:text-2xl prose-h2:text-xl prose-h1:font-bold prose-img:rounded-xl">
             <h1 className="text-sm">{postInfo.title}</h1>
             <h2>عنوان تستی اول</h2>
             <p>
@@ -171,6 +173,8 @@ const PostPage = ({ post }) => {
               <PostList posts={postInfo.related} />
             </section>
           ) : <></>}
+          {/* post comment */}
+          <PostCommnet post={postInfo}/>
         </div>
       </div>
     </div>

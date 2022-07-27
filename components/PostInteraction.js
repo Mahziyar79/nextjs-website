@@ -5,7 +5,7 @@ import {
 } from "@heroicons/react/outline";
 import { HeartIcon as HeartIconSolid } from "@heroicons/react/solid";
 
-import ToPersianDigits from "./ToPersinaDigits";
+import ToPersianDigits from "../utils/ToPersinaDigits";
 
 const PostInteraction = ({ blog, isSmall }) => {
   const iconSize = `${isSmall ? "w-4 h-4" : "w-6 h-6"}`;
