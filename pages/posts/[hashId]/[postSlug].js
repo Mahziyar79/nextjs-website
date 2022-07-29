@@ -10,6 +10,7 @@ import { useState } from "react";
 import PostList from "../../../components/PostList";
 import PostCommnet from "../../../components/postComments/PostComment";
 import { ToLocalDate } from "../../../utils/ToLocalDate";
+import Layout from "../../../containers/Layout";
 
 const PostPage = ({ post }) => {
   const [copied, setCopied] = useState(false);
@@ -23,7 +24,7 @@ const PostPage = ({ post }) => {
   };
 
   return (
-    <div>
+    <Layout>
       <div className="bg-gray-50 min-h-screen">
         <div className="container mx-auto lg:max-w-screen-lg xl:max-w-screen-xl px-4 md:px-0 pt-6">
           {/* blog header */}
@@ -52,9 +53,7 @@ const PostPage = ({ post }) => {
                   Front End Developer
                 </span>
                 <div className="mr-3 items-center text-xs flex gap-x-2">
-                  <span>
-                    {ToLocalDate(postInfo.createdAt)}
-                  </span>
+                  <span>{ToLocalDate(postInfo.createdAt)}</span>
                   <span className="text-2xl mt-[-12px]">.</span>
                   <div>
                     <span>زمان مطالعه :</span>
@@ -172,12 +171,14 @@ const PostPage = ({ post }) => {
               <h2 className="text-2xl mb-6 mt-5">پست های مرتبط</h2>
               <PostList posts={postInfo.related} />
             </section>
-          ) : <></>}
+          ) : (
+            <></>
+          )}
           {/* post comment */}
-          <PostCommnet post={postInfo}/>
+          <PostCommnet post={postInfo} />
         </div>
       </div>
-    </div>
+    </Layout>
   );
 };
 

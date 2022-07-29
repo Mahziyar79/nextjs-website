@@ -1,14 +1,13 @@
-import { AdjustmentsIcon } from "@heroicons/react/outline";
-import axios from "axios";
+import Head from "next/head";
 import Link from "next/link";
-import DesktopCategory from "../components/DesktopCategory";
-import DesktopNavSort from "../components/DesktopNavSort";
-import MobileCategory from "../components/MobileCategory";
-import PostList from "../components/PostList";
+import Layout from "../containers/Layout";
 
 export default function Home({ postCategories, posts }) {
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <Layout>
+      <Head>
+        <title>آموزش تخصصی برنامه نویسی وب</title>
+      </Head>
       <div className="container mx-auto lg:max-w-screen-xl px-4 md:px-0">
         <h1 className="text-center">Go to Blog Page</h1>
         <Link href="/blogs">
@@ -17,6 +16,6 @@ export default function Home({ postCategories, posts }) {
           </a>
         </Link>
       </div>
-    </div>
+    </Layout>
   );
 }
