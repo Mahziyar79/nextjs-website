@@ -5,8 +5,12 @@ import DesktopNavSort from "../../components/DesktopNavSort";
 import MobileCategory from "../../components/MobileCategory";
 import PostList from "../../components/PostList";
 import Layout from "../../containers/Layout";
+import http from "../../services/httpService";
+import queryString from "query-string";
+import Pagination from "@mui/material/Pagination";
 
 export default function Home({ postCategories, posts }) {
+  // console.log(posts.data.totalPages);
   return (
     <Layout>
       <Head>
@@ -17,19 +21,24 @@ export default function Home({ postCategories, posts }) {
           <DesktopCategory postCategories={postCategories} />
           <MobileCategory postCategories={postCategories} />
           <DesktopNavSort />
-          <PostList posts={posts.data.docs} />
+          <PostList posts={posts.data} />
+          
         </div>
       </div>
     </Layout>
   );
 }
 
-export async function getServerSideProps() {
-  const { data: postCategories } = await axios.get(
-    "http://localhost:5000/api/post-category"
+export async function getServerSideProps({req,query}) {
+  const { data: postCategories } = await http.get(
+    "/post-category"
   );
-  const { data: posts } = await axios.get(
-    "http://localhost:5000/api/posts?page=1&limit=10"
+  const { data: posts } = await http.get(
+    `/posts?${queryString.stringify(query)}` , {
+      headers : {
+        Cookie : req.headers.cookie || " "
+      }
+    }
   );
   return {
     props: {

@@ -14,7 +14,7 @@ export default function CategorySlug({ postCategories, posts }) {
           <DesktopCategory postCategories={postCategories} />
           <MobileCategory postCategories={postCategories} />
           <DesktopNavSort />
-          <PostList posts={posts.data.docs} />
+          <PostList posts={posts.data} />
         </div>
       </div>
     </Layout>

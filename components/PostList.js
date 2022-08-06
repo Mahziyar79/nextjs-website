@@ -2,14 +2,29 @@ import { ClockIcon } from "@heroicons/react/outline";
 import Link from "next/link";
 import ToPersianDigits from "../utils/ToPersinaDigits";
 import PostInteraction from "./PostInteraction";
+import Pagination from "@mui/material/Pagination";
+import { useRouter } from "next/router";
+import routerPush from "../utils/routerPush";
 
 const PostList = ({ posts }) => {
-  if (!posts.length) {
-    return <h2 className="mr-4 md:w-[400px]">مقاله ای در این دسته بندی وجود ندارد</h2>;
+  const router = useRouter();
+
+  const changeHandler = (e, page) => {
+    e.preventDefault();
+    router.query.page = page;
+    routerPush(router);
+  };
+
+  if (!posts.docs.length) {
+    return (
+      <h2 className="mr-4 md:w-[400px]">
+        مقاله ای در این دسته بندی وجود ندارد
+      </h2>
+    );
   }
   return (
     <div className="md:col-span-9 grid grid-cols-6 gap-8">
-      {posts.map((blog, index) => {
+      {posts.docs.map((blog, index) => {
         return (
           <div
             className="col-span-6 md:col-span-3 lg:col-span-2 bg-white flex flex-col rounded-3xl p-3 md:mx-0"
@@ -69,6 +84,14 @@ const PostList = ({ posts }) => {
           </div>
         );
       })}
+      <div className="col-span-6 m-auto" dir="ltr">
+        <Pagination
+          count={posts.totalPages}
+          page={posts.page}
+          color="primary"
+          onChange={changeHandler}
+        />
+      </div>
     </div>
   );
 };

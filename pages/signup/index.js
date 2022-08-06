@@ -6,6 +6,7 @@ import Input from "../../components/FormInput";
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import Layout from "../../containers/Layout";
+import { useAuth, useAuthActions } from "../../context/AuthContext";
 
 //  initial values
 const initialValues = {
@@ -15,7 +16,6 @@ const initialValues = {
   password: "",
   confirmPassword: "",
 };
-
 //  validation schema
 const validationSchema = Yup.object({
   name: Yup.string()
@@ -35,21 +35,25 @@ const validationSchema = Yup.object({
 });
 
 const SignupForm = () => {
-//   const dispatch = useDispatch();
-//   const userInfo = useSelector((state) => state.userSignin);
-//   const { user } = userInfo;
+  // const dispatch = useDispatch();
+  // const userInfo = useSelector((state) => state.userSignin);
+  // const { user } = userInfo;
+  const user = useAuth();
+  const dispatch = useAuthActions();
   const router = useRouter();
 
-//   useEffect(() => {
-//     if (user) router.push("/");
-//   }, [user]);
-
+  // useEffect(() => {
+  //   if (user) router.push("/");
+  // }, [user]);
+  console.log(user.user);
 
   //  onSubmit
   const onSubmit = (values) => {
     const { name, email, phoneNumber, password } = values;
-    console.log(values);
-    // dispatch(userSignup({ name, email, password, phoneNumber }));
+    dispatch({
+      type: "SIGNUP",
+      payload: { name, email, password, phoneNumber },
+    });
   };
 
   const formik = useFormik({
@@ -65,7 +69,10 @@ const SignupForm = () => {
         <title>ثبت نام </title>
       </Head>
       <div className="md:max-w-md px-4 md:px-4 container  mx-auto">
-        <form onSubmit={formik.handleSubmit} className="flex flex-col space-y-4">
+        <form
+          onSubmit={formik.handleSubmit}
+          className="flex flex-col space-y-4"
+        >
           <h1 className="font-black text-2xl text-violet-700 mb-4">ثبت نام</h1>
           <Input label="نام و نام خانوادگی" name="name" formik={formik} />
           <Input label="ایمیل" name="email" formik={formik} />
@@ -76,8 +83,18 @@ const SignupForm = () => {
             formik={formik}
             placeholder="09121234567"
           />
-          <Input label="رمز عبور" name="password" type="password" formik={formik} />
-          <Input label="تکرار رمز" name="confirmPassword" type="password" formik={formik} />
+          <Input
+            label="رمز عبور"
+            name="password"
+            type="password"
+            formik={formik}
+          />
+          <Input
+            label="تکرار رمز"
+            name="confirmPassword"
+            type="password"
+            formik={formik}
+          />
 
           <button
             type="submit"
@@ -87,7 +104,9 @@ const SignupForm = () => {
             ثبت نام
           </button>
           <Link href="/signin">
-            <p className="mt-4 py-4 cursor-pointer">قبلا ثبت نام کردی ؟ لاگین کنید</p>
+            <p className="mt-4 py-4 cursor-pointer">
+              قبلا ثبت نام کردی ؟ لاگین کنید
+            </p>
           </Link>
         </form>
       </div>

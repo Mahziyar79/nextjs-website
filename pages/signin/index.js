@@ -6,7 +6,7 @@ import React, { useEffect } from "react";
 import Input from "../../components/FormInput";
 import { useRouter } from "next/router";
 import Layout from "../../containers/Layout";
-import toast from "react-hot-toast";
+import { useAuth, useAuthActions } from "../../context/AuthContext";
 
 //  initial values
 const initialValues = {
@@ -24,10 +24,12 @@ const validationSchema = Yup.object({
 
 const SigninForm = () => {
   const router = useRouter();
+  const user = useAuth()
+  const dispatch = useAuthActions()
 
   //  onSubmit
   const onSubmit = (values) => {
-    // dispatch(userSignin(values));
+    dispatch({type:"SIGNIN" , payload : values});
   };
 
   const formik = useFormik({
@@ -37,9 +39,9 @@ const SigninForm = () => {
     validateOnMount: true,
   });
 
-//   useEffect(() => {
-//     if (user) router.push("/");
-//   }, [user]);
+  // useEffect(() => {
+  //   if (user) router.push("/");
+  // }, [user]);
 
   return (
     <Layout>

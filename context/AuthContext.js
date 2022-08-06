@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useReducerAsync } from "use-reducer-async";
 import Router from "next/router";
-import http from "@/services/httpService";
+import http from "../services/httpService";
 const AuthContext = createContext();
 const AuthContextDispather = createContext();
 
